@@ -57,9 +57,9 @@ def process_image():
     os.remove(file_path)
 
     # Process the predictions
-    if predictions > 0.75:
+    if predictions > 0.80:
         result = f'Wildfire (Probability: {predictions})'
-    elif predictions < 0.40:
+    else :
         result = f'No Wildfire (Probability: {predictions})'
 
     return jsonify({'result': result})

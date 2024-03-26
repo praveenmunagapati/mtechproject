@@ -36,5 +36,3 @@ def predictImage(filename):
     elif val > 0.8:
         print("Fire")
     return val
-
-predictImage("/workspaces/WildFire_Monitoring_Using_Satellite_Image/Flask_html/static/forest_fire.png")
