@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>WildFire Detection</title>
+	<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='Main.css')}}">
+</head>
+<body>
+	<div>
+		<div class="div1">
+			<span class="span1">
+				<a href="#top">HOME</a>
+			</span>
+			<!-- <span class="span1">
+				<a href="#end">CONTACT US</a>
+			</span> -->
+		</div>
+		<div class="transbox">
+           	    <img id="previewImage" src="#" alt="Preview" style="display:none;">
+            	    <form id="imageForm" enctype="multipart/form-data">
+                	<input type="file" id="imageInput" accept="image/*"
+                	onchange="handleImageSelection(event)">
+                	<button type="button" onclick="processImage()">Process Image</button>
+                	<h1 id="headed"></h1>
+            	    </form>
+		</div>
+	</div>
+    <footer id="end">
+            <h4 id="h">M praveen </h4>
+
+    </footer>
+    <script>
+        function handleImageSelection(event) {
+            const file = event.target.files[0];
+            const reader = new FileReader();
+
+            reader.onload = function() {
+                const previewImage = document.getElementById('previewImage');
+                previewImage.src = reader.result;
+                previewImage.style.display = 'block';
+            }
+
+            if (file) {
+                reader.readAsDataURL(file);
+            }
+        }
+
+        function processImage() {
+            const imageFile = document.getElementById('imageInput').files[0];
+            const result_img = document.getElementById('headed')
+            
+            let formData = new FormData();
+            formData.append('image', imageFile);
+            
+            fetch('/process_image', {
+                method: 'POST',
+                body: formData
+            })
+            .then(response => response.json())
+            .then(result => {
+                result_img.textContent = (result.result);
+            })
+            .catch(error => {
+                result_img.textContent = ('Error:', error);
+            });
+        }
+    </script>
+</body>
+</html>
